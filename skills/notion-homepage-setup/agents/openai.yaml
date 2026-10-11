@@ -1,0 +1,6 @@
+interface:
+  display_name: "配置我的 Notion Homepage"
+  short_description: "连接自己的账号并设置主页、语言时区和自动记录范围"
+  default_prompt: "使用 $notion-homepage-setup，配置我自己的 Notion 主页与项目自动记录。"
+policy:
+  allow_implicit_invocation: true

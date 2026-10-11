@@ -1,0 +1,18 @@
+{
+  "display_name": "Your Name",
+  "homepage_title": "Your Name’s Homepage",
+  "homepage_url": "",
+  "language": "zh-CN",
+  "timezone": "UTC",
+  "sync_mode": "manual",
+  "auto_create_projects": false,
+  "homepage_layout": "preserve",
+  "sections": {
+    "projects": "Projects",
+    "current": "Current",
+    "learning": "Learning",
+    "quick_access": "Quick Access",
+    "archive": "Archive"
+  },
+  "project_aliases": {}
+}

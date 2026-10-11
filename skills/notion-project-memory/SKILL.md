@@ -1,0 +1,42 @@
+---
+name: notion-project-memory
+description: "维护用户自己的 Notion Homepage 与项目知识：项目开始时查找或创建板块，每个确定的决策后自动同步，整理笔记、项目导航和状态。首次使用需要配置自己的主页和自动记录范围；也用于用户明确要求整理主页、归档项目或保存聊天知识。"
+---
+
+# Notion Homepage 与项目知识
+
+用当前使用者自己的 Notion 连接和 Homepage，复用“主页导航 → 项目页 → 决策与知识”的模式。此公共技能不携带作者的账号、页面 ID 或写入授权。用户指示优先于默认值。
+
+## 配置与工具
+
+首次使用或更换账号时，按 [references/setup.md](references/setup.md) 完成配置。配置来源按顺序为：本轮明确指示、已核实的当前用户配置、技能目录的 `profile.local.json`、用户给出的 Notion 配置页。云端没有本地文件时使用用户配置页或本聊天已确认的配置。示例配置不是可执行配置。
+
+读取目标主页，确认身份与可访问的目标。不能因为只有一个可访问 Homepage 就认定是当前用户的主页。未配置时只做查询并询问必要信息，不把安装技能当成允许自动写入。
+
+发现本环境可用的 Notion search、fetch、create pages、update page 工具，按实际定义调用。写入前读取 `notion://docs/enhanced-markdown-spec`。同一个已有连接可复用，无需另填密码或修改应用配置。缺少某个工具时仅停止依赖该工具的分支，给出待同步内容及具体阻碍，不把无权限当成目标不存在。
+
+## 按任务加载流程
+
+- **首次设置 / 建主页**：读取 [references/setup.md](references/setup.md) 和 [references/homepage.md](references/homepage.md)。
+- **开始或继续项目 / 决策确定**：读取 [references/project-workflow.md](references/project-workflow.md)，记录格式见 [references/note-format.md](references/note-format.md)。
+- **聊天知识 / 学习笔记入库**：读取 [references/knowledge.md](references/knowledge.md)。
+- **在 Notion 知识工作流中学习、练习或复习**：读取 [references/learning.md](references/learning.md)。学习方式按当前会话选择，普通项目执行不自动转为教学。
+- **总结项目 / 扫描选定历史聊天 / 补录旧项目**：读取 [references/consolidation.md](references/consolidation.md)，按用户选择的来源整理，并按 knowledge 流程分别归类知识与项目。
+- **整理 Homepage / 更新当前状态 / 归档**：读取 [references/homepage.md](references/homepage.md)，只执行用户指定范围。
+- **云端 ChatGPT 使用与分发**：读取 [references/platforms.md](references/platforms.md)。
+
+## 自动记录契约
+
+配置中的 `sync_mode` 为 `on_decision`，且当前用户已明确启用时：开展项目时定位或创建项目页；每确定一个决策，在当前工作中同步后再结束回复。用户选择、明确接受，以及在授权范围内实际实施并有证据的执行选择算确定的决策。建议与推测不算。一个回复中的决策可批量写；无新决策不重复调用写工具。用户暂时关闭记录时遵从。
+
+`sync_mode` 为 `manual` 时只在用户要求保存时写入。首次用户说明会话自动记录规则即可沿用，不在每个决策之后重复确认；也不跨账号沿用别人的授权。
+
+## 修改与验证
+
+先读后改，以目标附近的真实结构为依据。主页主要提供入口；详情存项目或知识页。保留数据库、同步块、子页、附件、原文和历史。使用原生 mention 引用，不用 page/database 标签无意移动内容。数据库必须先读 schema 与模板，不猜字段。
+
+查重以议题与结论、目标 URL 为依据，不只按标题。新结论取代旧决定时保留历史并注明取代关系。重试前重读；异步调用等成功后再做依赖操作。不得用共享状态、删除或移动项目来解决普通记录问题。
+
+新建和结构修改后 fetch 验证内容及导航链；普通精确替换按工具要求验证。多步操作部分成功时列明已完成和待完成，避免重建成功的页面。最终用一句话和链接报告同步结果；未验证不得声称成功。
+
+自动发现只是选择机制，不是后台监听或全部聊天的必然触发。需要稳定执行时，在新项目开始显式选用技能，并在对话内保持配置。其他记录技能可辅助提炼，但由本流程单独负责写入，避免重复日志。

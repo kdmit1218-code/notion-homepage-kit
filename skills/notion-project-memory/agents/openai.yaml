@@ -1,0 +1,6 @@
+interface:
+  display_name: "Notion Homepage 与项目记录"
+  short_description: "配置自己的主页，自动保存项目决策、知识与导航入口"
+  default_prompt: "使用 $notion-project-memory，按我的 Homepage 配置开展项目，并在每次确定决策后同步 Notion。"
+policy:
+  allow_implicit_invocation: true
