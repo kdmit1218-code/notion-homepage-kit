@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "notion-homepage-kit",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Personal Notion homepage setup, project decision memory and knowledge organization with each user's own connection.",
   "keywords": ["notion", "homepage", "project-memory", "knowledge"],
   "extensions": {

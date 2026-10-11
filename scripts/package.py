@@ -21,7 +21,7 @@ def validate_public_content(content, label):
 
 def public_files():
     files = [ROOT / 'plugin.json', ROOT / 'README.md', ROOT / '.gitignore', ROOT / 'requirements.txt']
-    files += [ROOT / 'docs' / name for name in ('chatgpt.md', 'publishing.md', 'evaluation.md', 'learning.md')]
+    files += [ROOT / 'docs' / name for name in ('chatgpt.md', 'gpt-instructions.md', 'gpt-skill.md', 'publishing.md', 'evaluation.md', 'learning.md')]
     files += [ROOT / 'scripts/configure.py', ROOT / 'scripts/package.py', ROOT / 'tests/test_distribution.py']
     for skill in ('notion-project-memory', 'notion-homepage-setup'):
         base = ROOT / 'skills' / skill
@@ -54,6 +54,11 @@ def build():
                 if relative.parts[:2] == ('skills', name):
                     archive.write(file, Path(*relative.parts[1:]).as_posix())
         outputs.append(out)
+    web_zip = dest / 'notion-homepage-kit-web.zip'
+    with zipfile.ZipFile(web_zip, 'w', zipfile.ZIP_DEFLATED) as archive:
+        for name in ('gpt-instructions.md', 'gpt-skill.md'):
+            archive.write(ROOT / 'docs' / name, name)
+    outputs.append(web_zip)
     return outputs
 
 

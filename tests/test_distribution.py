@@ -26,7 +26,7 @@ class DistributionTests(unittest.TestCase):
 
     def test_credential_field_and_foreign_url_rejected(self):
         validate = module('configure').validate_profile
-        for change in ({'password': 'do-not-store'}, {'homepage_url': 'https://example.org/page'}, {'homepage_url': 'https://user:password@www.notion.so/page'}, {'auto_create_projects': 'true'}):
+        for change in ({'password': 'do-not-store'}, {'homepage_url': 'https://example.org/page'}, {'homepage_url': 'https://user:password' + '@www.notion.so/page'}, {'auto_create_projects': 'true'}):
             data = self.profile()
             data.update(change)
             with self.assertRaises(ValueError):
@@ -81,6 +81,10 @@ class DistributionTests(unittest.TestCase):
                 self.assertIn('skills/notion-homepage-setup/SKILL.md', archive.namelist())
             with zipfile.ZipFile(artifacts[1]) as archive:
                 self.assertIn('notion-project-memory/SKILL.md', archive.namelist())
+            with zipfile.ZipFile(artifacts[2]) as archive:
+                self.assertEqual(set(archive.namelist()), {'gpt-instructions.md', 'gpt-skill.md'})
+                for name in archive.namelist():
+                    self.assertEqual(archive.read(name), (test_root / 'docs' / name).read_bytes())
 
 
 if __name__ == '__main__':

@@ -1,33 +1,49 @@
-# 在 ChatGPT 聊天中使用
+# 网页端使用：先配置你已经建好的 GPT
 
-核实日期：2026-10-11。以下依据当前官方文档；具体安装入口与权限以账号、工作区和实际界面为准。
+核实日期：2026-10-11。你已经上传了两个 Skill，接下来按这一条路径配置。网页端尚未在你的账号实测；菜单和可用工具以实际界面为准。
 
-## 本地与云端的区别
+## 1. 粘贴指令
 
-官方文档区分本地技能、ChatGPT 工作区技能和打包的 Plugin。把技能安装到电脑不会自动安装到网页账号，也不会传递 Notion 的连接授权。[技能控制](https://learn.chatgpt.com/docs/enterprise/skills)
+打开你创建的 GPT → 编辑 → 配置 → **指令**。复制 [gpt-instructions.md](gpt-instructions.md) 的全部文字，粘贴到这里，保存。如果已有其他用途的指令，保留并合并相关规则，不盲目覆盖。
 
-独立技能适合本地桌面、Codex CLI 和 IDE；将技能打包为 Plugin 是向支持的 ChatGPT 表面分发的方法。ChatGPT 用 `@` 选择，Codex 用 `$`。[构建技能](https://learn.chatgpt.com/docs/build-skills)
+指令是使用规则，不需要把两个 SKILL.md 再复制进去。[官方说明](https://learn.chatgpt.com/docs/migrate-custom-gpts)
 
-## 推荐操作
+## 2. 只上传一个知识文件
 
-1. 在 ChatGPT 中连接自己的 Notion，检查它实际提供的搜索、读取、建页与编辑能力。只读连接不能实现本工作流的自动保存。授权在 Notion/连接器页面进行。[Notion MCP 连接说明](https://developers.notion.com/guides/mcp/get-started-with-mcp)
-2. 个人开发测试：按官方本地 marketplace 流程安装本套 Plugin，再开新聊天验证；本地来源安装不能当作已在网页云端公开发布。正式分享走官方 Plugin 提交流程。[连接与测试](https://developers.openai.com/plugins/deploy/connect-chatgpt)
-3. 在支持 Plugin 的聊天里通过 `@` 选择本套设置技能。填写自己的显示名称、Homepage URL、语言、时区和同步规则。已有主页沿用，尚无主页时明确指定新建位置。
-4. 在项目聊天中选择记录技能，说“开始 XX 项目，按我的配置每确定一个决策就同步”。后续不用重复要求总结。必要配置保存在自己的 Notion 配置页；新会话让助手读取它。
-5. 检查第一次真实决策写入及 Homepage 项目入口。平台要求的确认仍由平台控制；自动记录的 Skill 不能绕过确认。
+在同一配置页面的 **知识** 中，只上传 [gpt-skill.md](gpt-skill.md)。它已合并首次设置、目录、项目、学习、笔记、历史总结与验证规则，内部按章节检索，不依赖其他文件或目录链接。
 
-可复制的聊天启动说明：
+网页配置共用两个文件：gpt-instructions.md 的文字粘到“指令”；gpt-skill.md 上传到“知识”。不用将两份都上传到知识里，因为附件不能代替指令栏。将你此前在该 GPT 中上传的本套旧 SKILL.md、ZIP 或七份分散参考替换为统一文件，避免旧规则互相矛盾；其他知识文件按你的需要保留。Codex 继续使用原来的两个技能，不需要改成单文件。
 
-> 使用 Notion Homepage Kit。请读取我提供的个人配置页或 Homepage 链接，在我已授权的 Notion 中按项目名称查找当前项目；缺失时创建项目页并补主页入口。每确定一个决策就更新结论、理由、影响和下一步，查重并回读验证。保留原有内容。
+## 3. 确认它真的能写 Notion
 
-这段话是配置/启动示例，不能替代安装或实际工具连接。把 SKILL.md 当普通附件上传也不能被描述为已装好 Plugin。
+打开这个 GPT 的新聊天，先发送：
 
-## 向别人提供云端安装
+> 请检查你当前实际可调用的 Notion 工具：能否搜索、读取页面、创建页面、编辑页面？只检查并告诉我具体缺少哪项，先不要写入。不把读写能力当作文件上传后自动获得。
 
-公开目录 Plugin 可以只含技能，也可以含 MCP。当前包是技能包，使用者另连 Notion。官方提交流程为上传 Plugin ZIP、处理自动检查、提交审核，批准后由作者发布。还需要发布身份及平台要求的元数据；本次只准备了包，没有远程提交、审核或发布。[发布流程](https://developers.openai.com/plugins/deploy/submission)
+有搜索和读取，并不意味着有创建和编辑。ChatGPT 设置中的 Apps/应用可以连接自己的 Notion，但连接后还需检查**这个 GPT 当前聊天**是否具有写入工具和目标权限。GPT 可配置 Apps 或 Actions，两者不能在同一个 GPT 中同时使用；具体入口受账号与工作区限制。[官方 GPT 工具说明](https://learn.chatgpt.com/docs/enterprise/gpts-and-sharing)
 
-如果未来要把 Notion 连接一并打包，需要按服务方支持的 OAuth 和 OpenAI 的 MCP/Plugin 规则配置连接，不能放别人账号密码；不要把现有技能包说成已有该服务。[MCP 身份认证](https://developers.openai.com/plugins/build/auth)
+若检查结果没有创建或编辑能力，当前配置只能整理草稿，无法完成自动同步。需要另行接入支持写入的 Notion App/MCP 或配置 GPT Actions；本套文件包未捆绑该连接服务，也没有替你完成网页接入。不要把账号密码或令牌填进指令、知识文件或聊天。
 
-## API 云端是另一条路径
+## 4. 首次启用，并验证一次
 
-官方 Skills API 能上传技能并用于受支持的执行环境，但这不等于安装进普通 ChatGPT 账号。API 路线还需工具授权、应用状态、成本及部署管理。[Skills API](https://developers.openai.com/api/docs/guides/tools-skills)
+工具齐全后，在同一个 GPT 的私人聊天中发送（替换括号里的内容）：
+
+> 我的显示名称是〔名称〕，Notion Homepage 是〔主页链接〕，时区是〔时区〕。请先读取并核实主页。在本主题内启用按确定决策记录，允许为新项目建页并补目录入口；已有主题更新原页。只保存关键结论、必要理由和下一步。现在记录测试决定：〔一个真实的小决定〕，回读确认并给我页面链接。
+
+打开返回的 Notion 链接，确认正文存在，并从 Homepage 的目录能进入。工具要求的平台确认仍须按提示完成。只有检查能力，不算完成写入验证。
+
+## 5. 以后怎么使用
+
+保存配置后，进入**这个 GPT**直接发请求即可，例如“开始 XX 项目”“把这次学习结论整理到 Notion”或“整理我的主页目录”。在该 GPT 内无需每轮输入 Skill 名称。首次按第4步提供自己的主页并启用本主题记录；后续本主题已授权的确定成果按规则同步。无关新主题先提供一次记录选择，拒绝后不反复提示。可以随时说“暂停记录”。新聊天若没有配置，提供主页或个人配置页让它读取。
+
+在普通聊天中使用时，可先打开这个 GPT，或在网页支持的 @ 选择菜单中选择**你创建的 GPT 名称**。能选到自定义 GPT 不代表安装了本套 Plugin；未进入该 GPT 的普通聊天不会自动获得这些指令。
+
+当前套件仅在 GitHub 发布，未完成 ChatGPT Plugin 平台发布；不要假定能在网页 `@` 菜单找到本套 Plugin。关闭聊天后不会持续监听所有聊天。
+
+## 如果你用的是 ChatGPT“项目”
+
+把同一份指令粘到 **项目指令**，只上传 gpt-skill.md 到项目的 **Sources/文件**，以后在该项目内直接发请求。仍需逐项检查当前聊天的 Notion 写入工具并验证一次。无需同时配置项目和自定义 GPT。[官方项目说明](https://learn.chatgpt.com/docs/projects)
+
+真正安装的 Skill/Plugin 可以显式选择或按描述隐式调用；上传知识文件是另一种配置方式。[官方技能说明](https://learn.chatgpt.com/docs/build-skills)
+
+面向其他用户的 Plugin 分发及 API 路线见 [发布说明](publishing.md)，无需为了当前 GPT 配置先搭建远程服务。
